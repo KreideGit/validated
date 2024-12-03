@@ -1,5 +1,6 @@
 #include <ck/validated.hpp>
 #include <iostream>
+#include <vector>
 
 class safe_list {
 public:
