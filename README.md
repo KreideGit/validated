@@ -18,7 +18,6 @@ validated is a C++ 20 header-only library designed to enhance type safety and ro
 * Compile Time: Fully `constexpr` enabled.
 * Ease of Use: Simplifies code by reducing boilerplate validation checks scattered throughout the codebase.
 * Header-Only: Easy to integrate with no need for compiled binaries, making it perfect for inclusion in both small and large projects.
-Getting Started
 
 ### Usage
 To use validated, define a type by specifying the underlying type T and a validator V. For example, to create a validated email type:
