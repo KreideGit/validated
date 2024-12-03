@@ -46,6 +46,10 @@ int main() {
     } catch (const ck::validation_error&) {
         std::cout << "Invalid email address!" << std::endl;
     }
+    
+    if(!email.try_assign("some-other-email")) {
+        std::cout << "This one is sinvalid too!" << std::endl;
+    }
 
     return 0;
 }
