@@ -1,4 +1,13 @@
-## Validated
+#### Build Status
+
+| Compiler       | Status                                                                                                                            |
+|----------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| GCC            | ![Build with GCC](https://github.com/KreideGit/validated/actions/workflows/ci.yml/badge.svg?branch=main&job=build-gcc)            |
+| Clang          | ![Build with Clang](https://github.com/KreideGit/validated/actions/workflows/ci.yml/badge.svg?branch=main&job=build-clang)             |
+| Apple Clang    | ![Build with Apple Clang](https://github.com/KreideGit/validated/actions/workflows/ci.yml/badge.svg?branch=main&job=build-apple-clang) |
+| MSVC           | ![Build with MSVC](https://github.com/KreideGit/validated/actions/workflows/ci.yml/badge.svg?branch=main&job=build-msvc)               |
+
+# Validated
 
 validated is a C++ 20 header-only library designed to enhance type safety and robustness by encapsulating data validation directly into the type system. It allows developers to declare types whose assignments are automatically validated against a specified criterion, ensuring that values always conform to expected formats or rules before they are used.
 
