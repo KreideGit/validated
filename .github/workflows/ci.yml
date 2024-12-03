@@ -7,64 +7,62 @@ on:
   pull_request:
 
 jobs:
-  build-and-test:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        compiler: [gcc, clang, apple-clang, msvc]
-        exclude:
-          - os: macos-latest
-            compiler: gcc
-          - os: macos-latest
-            compiler: clang
-          - os: windows-latest
-            compiler: apple-clang
-
+  build-gcc:
+    name: Build with GCC
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up dependencies
-        if: matrix.os == 'ubuntu-latest'
+      - name: Set up GCC
+        run: sudo apt-get update && sudo apt-get install -y gcc g++ cmake ninja-build
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+      - name: Build and Test
         run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake ninja-build g++ clang
+          cmake --build build --config Release
+          ctest --test-dir build --output-on-failure
 
-      - name: Set up macOS dependencies
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew install cmake ninja
+  build-clang:
+    name: Build with Clang
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up Windows dependencies
-        if: matrix.os == 'windows-latest'
+      - name: Set up Clang
+        run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+      - name: Build and Test
         run: |
-          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
-          choco install ninja -y
+          cmake --build build --config Release
+          ctest --test-dir build --output-on-failure
 
-      - name: Set up compiler
-        run: |
-          if [[ "${{ matrix.compiler }}" == "gcc" ]]; then
-            export CC=gcc
-            export CXX=g++
-          elif [[ "${{ matrix.compiler }}" == "clang" ]]; then
-            export CC=clang
-            export CXX=clang++
-          elif [[ "${{ matrix.compiler }}" == "apple-clang" ]]; then
-            export CC=clang
-            export CXX=clang++
-          elif [[ "${{ matrix.compiler }}" == "msvc" ]]; then
-            export CC=cl
-            export CXX=cl
-          fi
-        shell: bash
+  build-apple-clang:
+    name: Build with Apple Clang
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+      - name: Build and Test
+        run: |
+          cmake --build build --config Release
+          ctest --test-dir build --output-on-failure
 
-      - name: Build
-        run: cmake --build build --config Release
+  build-msvc:
+    name: Build with MSVC
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Run tests
-        run: ctest --test-dir build --output-on-failure
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build and Test
+        run: |
+          cmake --build build --config Release
+          ctest --test-dir build --output-on-failure
