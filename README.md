@@ -48,7 +48,7 @@ int main() {
     }
     
     if(!email.try_assign("some-other-email")) {
-        std::cout << "This one is sinvalid too!" << std::endl;
+        std::cout << "This one is invalid too!" << std::endl;
     }
 
     return 0;
