@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(BUILD_TESTS "Enable or disable building tests" ON)
+option(BUILD_EXAMPLES "Enable or disable building examples" ON)
 
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(ck::${PROJECT_NAME} ALIAS validated)
@@ -19,6 +20,10 @@ target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 if(BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
+endif()
+
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
 endif()
 
 install(DIRECTORY include/ DESTINATION include)
