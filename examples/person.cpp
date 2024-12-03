@@ -7,19 +7,19 @@ using not_empty_t = decltype([](const std::string& v) {
     return !v.empty();
 });
 
-using name = ck::validated<std::string, not_empty_t>;
+using name_t = ck::validated<std::string, not_empty_t>;
 
 template<size_t Max>
 using less_than_t = decltype([](size_t v) {
     return v < Max;
 });
 
-using age = ck::validated<size_t, less_than_t<150>>;
+using age_t = ck::validated<size_t, less_than_t<150>>;
 
 struct person {
-    name firstName;
-    name lastName;
-    age age;
+    name_t firstName;
+    name_t lastName;
+    age_t age;
 };
 
 int main(int argc, char** argv) {
