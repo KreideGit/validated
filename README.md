@@ -52,7 +52,7 @@ int main() {
 ```
 ### How It Works
 
-validated<T, V> works by wrapping a type T with a custom validator V. Every assignment to a validated type is checked against the validator, which should implement an operator() accepting a value of type T and returning a bool indicating whether the value is valid.
+`validated<T, V>` works by wrapping a type `T` with a custom validator `V`. Every assignment to a validated type is checked against the validator, which should implement an `operator()` accepting a value of type `T` and returning a `bool` indicating whether the value is valid.
 
 ### Contributing
 
